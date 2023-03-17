@@ -1,12 +1,14 @@
 import React from "react";
 import styled from "styled-components";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import db from "../firebase";
+import { useNavigate } from "react-router-dom";
 
 const Details = () => {
   const { id } = useParams();
   const [movie, setMovie] = useState();
+  let navigate = useNavigate();
 
   useEffect(() => {
     db.collection("movies")
@@ -20,6 +22,11 @@ const Details = () => {
         }
       });
   }, []);
+
+  const routeChange = () => {
+    let path = `yt`;
+    navigate(path);
+  };
 
   return (
     <Container>
@@ -37,7 +44,7 @@ const Details = () => {
               <img src="/images/play-icon-black.png" alt="" />
               <span>PLAY</span>
             </PlayButton>
-            <TrailerButton>
+            <TrailerButton onClick={routeChange}>
               <img src="/images/play-icon-white.png" alt="" />
               <span>TRAILER</span>
             </TrailerButton>
